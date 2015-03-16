@@ -27,6 +27,7 @@ continue:
 	# Load the GDT
 	lgdt gdt_size
 
+	
 	# Load CS with the new descriptor value
 	ljmp    $KERNEL_CS, $keep_going
 
@@ -47,6 +48,7 @@ keep_going:
 	# ebx = address of multiboot info struct
 	pushl   %ebx
 	pushl   %eax
+
 
 	# Jump to the C entrypoint to the kernel.
 	call    entry
