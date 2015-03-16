@@ -1,4 +1,5 @@
 #include "keyboard.h"
+#include "lib.h"
 
 /*
 void keyboard_init()
@@ -33,6 +34,7 @@ void keyboard_handler()
 	//printf("handler2");
 	send_eoi(1);
 	sti();
+	//test_interrupts();
 }
 
 /*

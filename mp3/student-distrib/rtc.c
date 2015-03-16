@@ -1,4 +1,5 @@
 #include "rtc.h"
+#include "lib.h"
 
 /* Initialize the rtc */
 void
@@ -22,4 +23,5 @@ rtc_handler(void) {
 	send_eoi(8);
 	printf("RTC sent EOI \n");
 	sti();
+	//test_interrupts();
 }

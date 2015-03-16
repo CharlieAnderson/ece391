@@ -33,6 +33,7 @@ i8259_init(void)
 
 	outb(0xff,MASTER_8259_DATA);
 	outb(0xff,SLAVE_8259_DATA);
+	
 	restore_flags(flags);
 }
 
@@ -44,10 +45,12 @@ enable_irq(uint32_t irq_num)
     uint8_t value;
  
     if(irq_num < 8) {
-        port = master_data;
+        port = MASTER_8259_DATA;
     } else {
-        port = slave_data;
+        port = SLAVE_8259_DATA;
         irq_num -= 8;
+		value = inb(MASTER_8259_DATA) & ~(1 << 2);
+		outb(value, MASTER_8259_DATA);
     }
     value = inb(port) & ~(1 << irq_num);
     outb( value, port);
@@ -61,9 +64,9 @@ disable_irq(uint32_t irq_num)
     uint8_t value;
  
     if(irq_num < 8) {
-        port = master_data;
+        port = MASTER_8259_DATA;
     } else {
-        port = slave_data;
+        port = SLAVE_8259_DATA;
         irq_num -= 8;
     }
     value = inb(port) | (1 << irq_num);

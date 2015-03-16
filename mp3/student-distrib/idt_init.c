@@ -188,8 +188,8 @@ void idt_init() {
 	SET_IDT_ENTRY(idt[18], &machine_check);
 	SET_IDT_ENTRY(idt[19], &simd_floating_point_exception);
 
-	SET_IDT_ENTRY(idt[0x21], &irq_keyboard);
-	SET_IDT_ENTRY(idt[0x28], &irq_rtc);
+	SET_IDT_ENTRY(idt[0x21], irq_keyboard);
+	SET_IDT_ENTRY(idt[0x28], irq_rtc);
 
-	SET_IDT_ENTRY(idt[0x80], &test_sys);
+	SET_IDT_ENTRY(idt[0x80], test_sys);
 }
