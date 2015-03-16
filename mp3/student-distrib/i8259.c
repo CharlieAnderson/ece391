@@ -76,11 +76,11 @@ send_eoi(uint32_t irq_num)
 {
 
 	//OR EOI with irq num and send it out to PIC
-	uint32_t irq_cmd = (irq_num | EOI);
+	/*uint32_t irq_cmd = (irq_num | EOI);
 
 	printf("end of interrupt %d \n", irq_num);
 	printf("end of interrupt %d \n", EOI);
-	printf("end of interrupt %d \n", irq_cmd);
+	printf("end of interrupt %d \n", irq_cmd);*/
 
 	if(irq_num >= 8)
 		outb( 0x20, SLAVE_8259_PORT);

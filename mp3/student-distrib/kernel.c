@@ -156,11 +156,6 @@ entry (unsigned long magic, unsigned long addr)
 	printf("init PIC\n");
 	i8259_init();
 
-	/* Init the RTC */
-	rtc_init();
-
-
-
 	/* Initialize devices, memory, filesystem, enable device interrupts on the
 	 * PIC, any other initialization stuff... */
 
@@ -169,11 +164,8 @@ entry (unsigned long magic, unsigned long addr)
 	 * IDT correctly otherwise QEMU will triple fault and simple close
 	 * without showing you any output */
 	printf("Enabling Interrupts\n");
-
 	keyboard_init();
-
-
-
+	rtc_init();
 	sti();
 
 
@@ -185,4 +177,3 @@ entry (unsigned long magic, unsigned long addr)
 	/* Spin (nicely, so we don't chew up cycles) */
 	asm volatile(".1: hlt; jmp .1;");
 }
-

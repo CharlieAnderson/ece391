@@ -24,13 +24,13 @@ void keyboard_handler()
 {
 	/*send eoi to PIC*/
 	cli();
-	printf("handler1");
+	//printf("handler1");
 	/*read the scan code*/
 	unsigned char c = 0;
 	c = inb(KEYBOARD_DATA);
 	key_echo(c);
 
-	printf("handler2");
+	//printf("handler2");
 	send_eoi(1);
 	sti();
 }
