@@ -1,59 +1,86 @@
 #include "keyboard.h"
-#include "i8259.h"
-#include "lib.h"
 
-/* scan code set 2 */
-/* I set most things we don't need yet to null except the ascii things */
-unsigned char key_table[SCAN_CODE_SIZE] =
+/*
+void keyboard_init()
+input:none
+output:none
+description:enable keyboard interrupt
+side effect:none
+*/
+void keyboard_init()
 {
-	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 	/* 0x00 - 0x14 */
-	'q','1',									/* 0x15 - 0x16 */
-	0,0,0,										/* 0x17 - 0x19 */
-	'z','s','a','w','2',						/* 0x1A - 0x1E */
-	0,0,										/* 0x1F - 0x20 */
-	'c','x','d','e','4','3',					/* 0x21 - 0x26 */
-	' ','v','f','t','r','5',					/* 0x29 - 0x2E */
-	0,0,										/* 0x2F - 0x30 */
-	'n','b','h','g','y','6',					/* 0x31 - 0x36 */
-	0,0,0,										/* 0x37 - 0x39 */
-	'm','j','u','7','8',						/* 0x3A - 0x3E */
-	0,0,										/* 0x3F - 0x40 */
-	',','k','i','o','0','9',					/* 0x41 - 0x46 */
-	0,0,										/* 0x47 - 0x48 */
-	'.','/','l',';','p','-',					/* 0x49 - 0x4E */
-	0,0,0,										/* 0x4F - 0x51 */
-	44,											/* 0x52 apostrophe */
-	0,											/* 0x53 */
-	'[','=',									/* 0x54 - 0x55 */
-	0,0,0,0,									/* 0x56 - 0x59 */
-	10,											/* 0x5A newline */
-	']',										/* 0x5B */
-	0,											/* 0x5C */
-	92,											/* 0x5D backslash */
-	0,0,0,0,0,0,0,0,							/* 0x5E - 0x65 */
-	8											/* 0x66 backspace */
+	enable_irq(1);
+	printf("keyboard is init");
+}
 
-};
-
-/* 
-* void keyboard_handler()
-*   Inputs: none
-*   Return Value: none
-*   Output: print the number or letter pressed
-*	Function: read scan code from keyboard and print the character
+/*
+void keyboard_handler()
+input: none
+output: none
+description: echo the pressed key
+side effect:none
 */
 void keyboard_handler()
 {
+	/*send eoi to PIC*/
+	send_eoi(1);
 	cli();
-	unsigned char keyboard_scan = inb(KEYBOARD_PORT);
-	unsigned char key_pressed = 0x0;
-
-	/* if it's in range of the table */
-	if(keyboard_scan < 0x67)
-		key_pressed = key_table[keyboard_scan];
-
-	printf("%x\n", key_pressed);	
-
-	send_eoi(KEYBOARD_IRQ);
+	/*read the scan code*/
+	unsigned char c = 0;
+	c = inb(KEYBOARD_DATA);
+	key_echo(c);
 	sti();
+}
+
+/*
+void key_echo(unsigned char key)
+input:key, scan code received by CPU
+output:none
+description:map the scan code to actual key
+side effect: print the pressed key on screen
+*/
+
+void key_echo(unsigned char key)
+{
+	switch (key) {
+		case 2: printf("1"); break;
+		case 3: printf("2"); break;
+		case 4: printf("3"); break;
+		case 5: printf("4"); break;
+		case 6: printf("5"); break;
+		case 7: printf("6"); break;
+		case 8: printf("7"); break;
+		case 9: printf("8"); break;
+		case 10: printf("9"); break;
+		case 11: printf("10"); break;
+		case 16: printf("q"); break;
+		case 17: printf("w"); break;
+		case 18: printf("e"); break;
+		case 19: printf("r"); break;
+		case 20: printf("t"); break;
+		case 21: printf("y"); break;
+		case 22: printf("u"); break;
+		case 23: printf("i"); break;
+		case 24: printf("o"); break;
+		case 25: printf("p"); break;
+		case 30: printf("a"); break;
+		case 31: printf("s"); break;
+		case 32: printf("d"); break;
+		case 33: printf("f"); break;
+		case 34: printf("g"); break;
+		case 35: printf("h"); break;
+		case 36: printf("j"); break;
+		case 37: printf("k"); break;
+		case 38: printf("l"); break;
+		case 44: printf("z"); break;
+		case 45: printf("x"); break;
+		case 46: printf("c"); break;
+		case 47: printf("v"); break;
+		case 48: printf("b"); break;
+		case 49: printf("n"); break;
+		case 50: printf("m"); break;
+		default: break;
+	}
+	return;
+
 }

@@ -3,6 +3,7 @@
 #include "lib.h"
 #include "x86_desc.h"
 #include "idt_init.h"
+#include "irq.h"
 
 void divide_error() {
 	clear();
@@ -19,147 +20,125 @@ void debug_exception() {
 void nmi_interrupt() {
 	clear();
 	printf("Exception in: NMI Interrupt (idt[2])\n");
-
 	while(1) {}
 }
 
 void breakpoint() {
 	clear();
 	printf("Exception in: Breakpoint (idt[3])\n");
-
 	while(1) {}
 }
 
 void overflow() {
 	clear();
 	printf("Exception in: Overflow (idt[4])\n");
-
 	while(1) {}
 }
 
 void bound_range_exceeded() {
 	clear();
 	printf("Exception in: BOUND Range Exceeded (idt[5])\n");
-
 	while(1) {}
 }
 
 void invalid_opcode() {
 	clear();
 	printf("Exception in: Invalid Opcode (idt[6])\n");
-
 	while(1) {}
 }
 
 void device_not_available() {
 	clear();
 	printf("Exception in: Device Not Available (idt[7])\n");
-
 	while(1) {}
 }
 
 void double_fault() {
 	clear();
 	printf("Exception in: Double Fault (idt[8])\n");
-
 	while(1) {}
 }
 
 void coprocessor_segment_overrun() {
 	clear();
 	printf("Exception in: Coprocessor Segment Overrun (idt[9])\n");
-
 	while(1) {}
 }
 
 void invalid_tss() {
 	clear();
 	printf("Exception in: Invalid TSS (idt[10])\n");
-
 	while(1) {}
 }
 
 void segment_not_present() {
 	clear();
 	printf("Exception in: Segment Not Present (idt[11])\n");
-
 	while(1) {}
 }
 
 void stack_fault() {
 	clear();
 	printf("Exception in: Stack Fault (idt[12])\n");
-
 	while(1) {}
 }
 
 void general_protection() {
 	clear();
 	printf("Exception in: General Protection (idt[13])\n");
-
 	while(1) {}
 }
 
 void page_fault() {
 	clear();
 	printf("Exception in: Page Fault (idt[14])\n");
-
 	while(1) {}
 }
 
 void floating_point_error() {
 	clear();
 	printf("Exception in: Floating-Point Error (idt[16])\n");
-
 	while(1) {}
 }
 
 void alignment_check() {
 	clear();
 	printf("Exception in: Alignment Check (idt[17])\n");
-
 	while(1) {}
 }
 
 void machine_check() {
 	clear();
 	printf("Exception in: Machine Check (idt[18])\n");
-
 	while(1) {}
 }
 
 void simd_floating_point_exception() {
 	clear();
 	printf("Exception in: SIMD Floating-Point Exception (idt[19])\n");
-
 	while(1) {}
 }
 
 void common_exception() {
 	clear();
 	printf("Exception in: Common\n");
-
 	while(1) {}
 }
 
 void test_keyboard() {
 	clear();
 	printf("test keyboard is here");
-
 }
 
 void test_rtc() {
 	clear();
 	printf("test rtc here");
-
 }
 
 void test_sys() {
 	clear();
 	printf("test sys here");
 }
-
-
 
 void idt_init() {
 	idt_desc_t idt_interrupt;
@@ -208,4 +187,8 @@ void idt_init() {
 	SET_IDT_ENTRY(idt[17], &alignment_check);
 	SET_IDT_ENTRY(idt[18], &machine_check);
 	SET_IDT_ENTRY(idt[19], &simd_floating_point_exception);
+	
+	SET_IDT_ENTRY(idt[0x21], irq_keyboard);
+	SET_IDT_ENTRY(idt[0x28], irq_rtc);
+	SET_IDT_ENTRY(idt[0x80], test_sys);
 }

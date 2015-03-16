@@ -152,32 +152,6 @@ entry (unsigned long magic, unsigned long addr)
 	/* Init the PIC */
 	i8259_init();
 
-
-	/* Init the keyboard */
-	enable_irq(KEYBOARD_IRQ);
-
-
-//RTC INIT -- MAY MOVE THIS TO SEPARATE FILE
-//RTC interrupts are disabled by default. If you turn on the RTC interrupts, the RTC will periodically generate IRQ 8.
-char prev;
-cli();			// disable interrupts
-//CMOS I/O ports are 0x70,0x71
-outb( 0x8B, 0x70);		// 0xB is the offset for register B, might have to reset A,B and C to start?
-prev = inb(0x71);	
-outb( 0x8B, 0x70);		// done again because reads will reset it
-outb( prev|0x40, 0x71);	// setting bit 6 of register B of CMOS, which is periodic interrupt
-sti();  // enable interrupts
-
-int x;
-x = x/0;
-//filename: interrupt_handler.c 
-/*
-void interrupt_handler()
-{
-  
-}
-*/
-
 	/* Initialize devices, memory, filesystem, enable device interrupts on the
 	 * PIC, any other initialization stuff... */
 
@@ -185,8 +159,9 @@ void interrupt_handler()
 	/* Do not enable the following until after you have set up your
 	 * IDT correctly otherwise QEMU will triple fault and simple close
 	 * without showing you any output */
-	/*printf("Enabling Interrupts\n");
-	sti();*/
+	printf("Enabling Interrupts\n");
+	keyboard_init();
+	sti();
 
 	/* Execute the first program (`shell') ... */
 

@@ -1,15 +1,21 @@
-/* keyboard.h
- * defines the keyboard handler and constants to be used by it
- */
+#ifndef _KEYBOARD_H
+#define _KEYBOARD_H
 
-#ifndef KEYBOARD_H
-#define KEYBOARD_H
+#include "types.h"
+#include "lib.h"
+#include "i8259.h"
 
-#define KEYBOARD_IRQ 1
-#define KEYBOARD_PORT 0x60
-#define SCAN_CODE_SIZE 0x67	//just big enough to span scan codes of numbers and letters
+/* Ports that each PIC sits on */
+#define INDEX_RTC_PORT 	0x70
+#define SLAVE_RTC_PORT  0x71
+#define KEYBOARD_DATA	0x60
 
-/* prints key pressed (lower case letters and numbers) */
-extern void keyboard_handler();
+/* Initialize the keyboard */
+void keyboard_init(void);
 
-#endif /* KEYBOARD_H */
+/* handle keyboard interrupts */
+extern void keyboard_handler(void);
+
+void key_echo(unsigned char key);
+
+#endif /* _KEYBOARD_H */
