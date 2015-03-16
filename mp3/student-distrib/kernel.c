@@ -7,6 +7,7 @@
 #include "lib.h"
 #include "i8259.h"
 #include "debug.h"
+#include "keyboard.h"
 
 /* Macros. */
 /* Check if the bit BIT in FLAGS is set. */
@@ -149,6 +150,9 @@ entry (unsigned long magic, unsigned long addr)
 	
 	/* Init the PIC */
 	i8259_init();
+
+	/* Init the keyboard */
+	enable_irq(KEYBOARD_IRQ);
 
 	/* Initialize devices, memory, filesystem, enable device interrupts on the
 	 * PIC, any other initialization stuff... */
