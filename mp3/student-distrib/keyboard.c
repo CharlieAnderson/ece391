@@ -8,9 +8,9 @@ description:enable keyboard interrupt
 side effect:none
 */
 void keyboard_init()
-{
+{	
 	enable_irq(1);
-	printf("keyboard is init");
+	printf("keyboard is init \n");
 }
 
 /*
@@ -23,12 +23,15 @@ side effect:none
 void keyboard_handler()
 {
 	/*send eoi to PIC*/
-	send_eoi(1);
 	cli();
+	printf("handler1");
 	/*read the scan code*/
 	unsigned char c = 0;
 	c = inb(KEYBOARD_DATA);
 	key_echo(c);
+
+	printf("handler2");
+	send_eoi(1);
 	sti();
 }
 

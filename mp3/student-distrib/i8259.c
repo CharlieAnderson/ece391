@@ -10,8 +10,7 @@
 uint8_t master_mask; /* IRQs 0-7 */
 uint8_t slave_mask; /* IRQs 8-15 */
 
-uint8_t master_data = (MASTER_8259_PORT+1);
-uint8_t slave_data = (SLAVE_8259_PORT+1);
+
 
 /* Initialize the 8259 PIC */
 void
@@ -85,13 +84,17 @@ void
 send_eoi(uint32_t irq_num)
 {
 
-//OR EOI with irq num and send it out to PIC
-uint8_t irq_cmd = irq_num | EOI;
+	//OR EOI with irq num and send it out to PIC
+	uint32_t irq_cmd = (irq_num | EOI);
+
+	printf("end of interrupt %d \n", irq_num);
+	printf("end of interrupt %d \n", EOI);
+	printf("end of interrupt %d \n", irq_cmd);
 
 	if(irq_num >= 8)
-		outb( irq_cmd, SLAVE_8259_PORT);
- 
-	outb(irq_cmd, MASTER_8259_PORT); 
+		outb( 0x20, SLAVE_8259_PORT);
+ 												//works if i use 0x20 (nonspecific eoi) instead of specific eoi
+	outb(0x20, MASTER_8259_PORT); 
 
 }
 
