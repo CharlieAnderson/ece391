@@ -35,7 +35,7 @@ unsigned char key_table[SCAN_CODE_SIZE] =
 
 };
 
-/*
+/* 
 * void keyboard_handler()
 *   Inputs: none
 *   Return Value: none
