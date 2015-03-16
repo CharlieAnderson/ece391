@@ -6,14 +6,18 @@
 
 .text
 
-.globl  ldt_size, tss_size, gdt_size
+.globl  ldt_size, tss_size
 .globl  gdt_desc, ldt_desc, tss_desc
 .globl  tss, tss_desc_ptr, ldt, ldt_desc_ptr
-.globl  gdt_ptr
+.globl  gdt_ptr, gdt_param
 .globl  idt_desc_ptr, idt
+
 .align 4
 
 
+gdt_param:
+	.word gdt_bottom - gdt - 1
+	.long gdt
 
 tss_size:
 	.long tss_bottom - tss - 1
@@ -22,11 +26,6 @@ ldt_size:
 	.long ldt_bottom - ldt - 1
 
 	.word 0 # Padding
-
-gdt_size:
-.word gdt_bottom - gdt - 1 #16 bit size limit
-.long gdt #32 bits address
-
 ldt_desc:
 	.word KERNEL_LDT
 	.long ldt
@@ -42,7 +41,6 @@ tss_bottom:
 	.align  16
 gdt:
 _gdt:
-
 
 	# First GDT entry cannot be used
 	.quad 0
@@ -89,8 +87,6 @@ ldt_desc_ptr:
 	.quad 0
 
 gdt_bottom:
-
-
 
 	.align 16
 ldt:
