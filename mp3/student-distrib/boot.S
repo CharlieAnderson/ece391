@@ -30,9 +30,6 @@ continue:
 	# Load the IDT
 	lidt idt_desc_ptr
 
-	#load the idt
-	lidt idt_desc_ptr
-
 	# Load CS with the new descriptor value
 	ljmp    $KERNEL_CS, $keep_going
 

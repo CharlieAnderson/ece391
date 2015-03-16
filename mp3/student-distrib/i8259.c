@@ -16,33 +16,24 @@ uint8_t slave_mask; /* IRQs 8-15 */
 void
 i8259_init(void)
 {												//based off of wiki.osdev.org ===============================================================================================================================>
-
-	uint16_t mask1 = inb(master_data);
-	uint16_t mask2 = inb(slave_data);
-
-														
+	uint32_t flags;
+	cli_and_save(flags);
+	
 	outb( ICW1, MASTER_8259_PORT);  
 	outb( ICW1, SLAVE_8259_PORT);
 
+	outb( ICW2_MASTER, MASTER_8259_DATA);
+	outb( ICW2_SLAVE, SLAVE_8259_DATA);
 
-
-	outb( ICW2_MASTER, master_data);                 
-	outb( ICW2_SLAVE, slave_data);                 
-
-
-	outb( ICW3_MASTER, master_data);                       
-	outb( ICW3_SLAVE, slave_data);                      
+	outb( ICW3_MASTER, MASTER_8259_DATA);
+	outb( ICW3_SLAVE, SLAVE_8259_DATA);
  
+	outb( ICW4, MASTER_8259_DATA);
+	outb( ICW4, SLAVE_8259_DATA);
 
-	outb( ICW4, master_data);
-	outb( ICW4, slave_data);
- 
-
-	outb( mask1, master_data);  
-	outb( mask2, slave_data);
-
-
-
+	outb(0xff,MASTER_8259_DATA);
+	outb(0xff,SLAVE_8259_DATA);
+	restore_flags(flags);
 }
 
 /* Enable (unmask) the specified IRQ */
@@ -97,4 +88,3 @@ send_eoi(uint32_t irq_num)
 	outb(0x20, MASTER_8259_PORT); 
 
 }
-
