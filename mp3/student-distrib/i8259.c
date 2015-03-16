@@ -21,7 +21,7 @@ i8259_init(void)
 	uint16_t mask1 = inb(master_data);
 	uint16_t mask2 = inb(slave_data);
 
-														//THESE MIGHT ALL BE REVERESED, like ICW then port... due to different syntax GAS
+														
 	outb( ICW1, MASTER_8259_PORT);  
 	outb( ICW1, SLAVE_8259_PORT);
 
