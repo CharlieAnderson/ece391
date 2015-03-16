@@ -144,6 +144,9 @@ entry (unsigned long magic, unsigned long addr)
 		ltr(KERNEL_TSS);
 	}
 
+	/* Init the idt */
+	idt_init();
+	
 	/* Init the PIC */
 	i8259_init();
 
