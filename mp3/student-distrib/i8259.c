@@ -91,7 +91,7 @@ uint8_t irq_cmd = irq_num | EOI;
 	if(irq_num >= 8)
 		outb( irq_cmd, SLAVE_8259_PORT);
  
-	outb(irq_cmd, MASTER_8259_PORT); //might change second param for both, it should be the command to send
+	outb(irq_cmd, MASTER_8259_PORT); 
 
 }
 
