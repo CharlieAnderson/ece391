@@ -7,6 +7,9 @@
 #include "lib.h"
 #include "i8259.h"
 #include "debug.h"
+#include "keyboard.h"
+#include "idt_init.h"
+#include "rtc.h"
 #include "paging.h"
 
 /* Macros. */
@@ -29,7 +32,7 @@ entry (unsigned long magic, unsigned long addr)
 		printf ("Invalid magic number: 0x%#x\n", (unsigned) magic);
 		return;
 	}
-
+ 
 	/* Set MBI to the address of the Multiboot information structure. */
 	mbi = (multiboot_info_t *) addr;
 
@@ -145,10 +148,13 @@ entry (unsigned long magic, unsigned long addr)
 		ltr(KERNEL_TSS);
 	}
 
-	/*Enable paging*/
-	page();
+	//clear();
+	/* Init the idt */
+	printf("init idt\n");
+	idt_init();
 
 	/* Init the PIC */
+	printf("init PIC\n");
 	i8259_init();
 
 	/* Initialize devices, memory, filesystem, enable device interrupts on the
@@ -158,12 +164,19 @@ entry (unsigned long magic, unsigned long addr)
 	/* Do not enable the following until after you have set up your
 	 * IDT correctly otherwise QEMU will triple fault and simple close
 	 * without showing you any output */
-	/*printf("Enabling Interrupts\n");
-	sti();*/
+	printf("Enabling Interrupts\n");
+	//keyboard_init();
+	rtc_init();
+
+	/*Enable Paging*/
+	page();
+	sti();
+	
+	//test_interrupts();
+
 
 	/* Execute the first program (`shell') ... */
 
 	/* Spin (nicely, so we don't chew up cycles) */
 	asm volatile(".1: hlt; jmp .1;");
 }
-

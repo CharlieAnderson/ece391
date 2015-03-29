@@ -11,11 +11,18 @@
 /* Ports that each PIC sits on */
 #define MASTER_8259_PORT 0x20
 #define SLAVE_8259_PORT  0xA0
+#define MASTER_8259_DATA 0x21
+#define SLAVE_8259_DATA  0xA1
+
+ // data locations
+#define master_data 0x21
+#define slave_data  0xA1
+
 
 /* Initialization control words to init each PIC.
  * See the Intel manuals for details on the meaning
  * of each word */
-#define ICW1    0x11
+#define ICW1    	  0x11
 #define ICW2_MASTER   0x20
 #define ICW2_SLAVE    0x28
 #define ICW3_MASTER   0x04

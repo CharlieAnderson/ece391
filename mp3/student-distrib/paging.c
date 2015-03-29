@@ -1,49 +1,56 @@
-#include "lib.h"
 #include "paging.h"
-#include "types.h"
 
+static uint32_t page_directory[1024] __attribute__((aligned(4096)));
+
+static uint32_t page_table[1024] __attribute__((aligned(4096)));
+
+/*
+void page()
+	input: none
+	output: none
+	description: Initializes paging
+	side effect: 4k pages enabled
+*/
 void page(){
 	int i;
 
-	for(i = 0; i < 1024; i++){
-		page_directory[i] = 0x00000002;
+	for(i = 0; i < 1024; i++){			//create a page directory and fill it with nothing
+		page_directory[i] = BLANK;
 	}
 
 	for(i = 0; i<1024; i++){
-		page_table[i] = 0x00000002;
+		page_table[i] = BLANK;			// create a page directory and fill with nothing
 	}
 
-	page_table[184] = (VIDEO<<12) | 0x1;
+	page_table[184] = VIDEO | 0x3;		// map entry 185 to video memory and set proper flags
 
-	page_directory[0] = ((unsigned int)page_table) | 1;
-	page_directory[1] = 0x00400000 | 0x181;
-
-	lpagedir(&page_directory);
+	page_directory[0] = ((unsigned int)page_table) | 3;		// load page table into page directory
+	page_directory[1] = KERNEL | DIR_FLAGS;					// load kernel into page directory
 
 	enablePaging();
 }
 
-void lpagedir(uint32_t* page_dir_ptr)
-{
-	asm volatile("                  \n\
-			movw    %0, %%eax	     \n\
-			movw    %%eax, %%cr3      \n\
-			"
-			:
-			: "a"(page_dir_ptr)
-			: "eax"
-			);
-}
-
+/*
+void enablePaging()
+	input: none
+	output: none
+	description: sets proper registers for enabling paging
+	side effect:none
+*/
 void enablePaging()
 {
 	asm volatile("                  \n\
-			movw    %%cr0, %%eax	     \n\
-			or $0x80000001, %%eax	\n\
-			movw    %%eax, %%cr0      \n\
+			movl 	$page_directory, %%eax \n\
+			movl 	%%eax, %%cr3 \n\
+			movl	%%cr4, %%eax	\n\
+			orl $0x00000010, %%eax	\n\
+			movl 	%%eax, %%cr4	\n\
+			movl    %%cr0, %%eax	     \n\
+			orl $0x80000000, %%eax	\n\
+			movl    %%eax, %%cr0      \n\
 			"
 			:
 			:
-			: "eax"
+			: "eax", "cc"
 			);
 }

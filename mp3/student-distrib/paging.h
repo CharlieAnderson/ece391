@@ -1,14 +1,18 @@
 #ifndef PAGING_H_
 #define PAGING_H_
 
-	uint32_t page_directory __attribute__((aligned(4096)));
+#include "lib.h"
+#include "paging.h"
+#include "types.h"
 
-	uint32_t page_table[1024] __attribute__((aligned(4096)));
+/*Values for working with Paging*/
+#define VIDEO 0xB8000
+#define KERNEL 0x00400000
+#define BLANK 0x00000002
+#define DIR_FLAGS 0x83
 
-	void page();
+void page();
 
-	void lpagedir(uint32_t* page_dir_ptr);
-
-	void enablePaging();
+void enablePaging();
 	
-#endif PAGING_H_
+#endif /* PAGING_H_ */

@@ -1,0 +1,173 @@
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/sp15-ece391/!svn/ver/15960/_projects/group31/student-distrib
+END
+keyboard.c
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/sp15-ece391/!svn/ver/15988/_projects/group31/student-distrib/keyboard.c
+END
+irq.h
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/sp15-ece391/!svn/ver/15960/_projects/group31/student-distrib/irq.h
+END
+x86_desc.S
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/sp15-ece391/!svn/ver/15960/_projects/group31/student-distrib/x86_desc.S
+END
+Makefile.dep
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/sp15-ece391/!svn/ver/15960/_projects/group31/student-distrib/Makefile.dep
+END
+idt_init.c
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/sp15-ece391/!svn/ver/15988/_projects/group31/student-distrib/idt_init.c
+END
+keyboard.h
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/sp15-ece391/!svn/ver/15960/_projects/group31/student-distrib/keyboard.h
+END
+DEBUG
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/sp15-ece391/!svn/ver/15960/_projects/group31/student-distrib/DEBUG
+END
+lib.c
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/sp15-ece391/!svn/ver/15960/_projects/group31/student-distrib/lib.c
+END
+idt_init.h
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/sp15-ece391/!svn/ver/15960/_projects/group31/student-distrib/idt_init.h
+END
+types.h
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/sp15-ece391/!svn/ver/15960/_projects/group31/student-distrib/types.h
+END
+lib.h
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/sp15-ece391/!svn/ver/15988/_projects/group31/student-distrib/lib.h
+END
+irq.S
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/sp15-ece391/!svn/ver/15960/_projects/group31/student-distrib/irq.S
+END
+debug.sh
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/sp15-ece391/!svn/ver/15960/_projects/group31/student-distrib/debug.sh
+END
+bootimg
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/sp15-ece391/!svn/ver/15988/_projects/group31/student-distrib/bootimg
+END
+kernel.c
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/sp15-ece391/!svn/ver/15960/_projects/group31/student-distrib/kernel.c
+END
+i8259.c
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/sp15-ece391/!svn/ver/15988/_projects/group31/student-distrib/i8259.c
+END
+boot.S
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/sp15-ece391/!svn/ver/15960/_projects/group31/student-distrib/boot.S
+END
+multiboot.h
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/sp15-ece391/!svn/ver/15960/_projects/group31/student-distrib/multiboot.h
+END
+i8259.h
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/sp15-ece391/!svn/ver/15960/_projects/group31/student-distrib/i8259.h
+END
+INSTALL
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/sp15-ece391/!svn/ver/15960/_projects/group31/student-distrib/INSTALL
+END
+rtc.c
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/sp15-ece391/!svn/ver/15988/_projects/group31/student-distrib/rtc.c
+END
+x86_desc.h
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/sp15-ece391/!svn/ver/15960/_projects/group31/student-distrib/x86_desc.h
+END
+filesys_img
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/sp15-ece391/!svn/ver/15960/_projects/group31/student-distrib/filesys_img
+END
+mp3.img
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/sp15-ece391/!svn/ver/15988/_projects/group31/student-distrib/mp3.img
+END
+orig.img
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/sp15-ece391/!svn/ver/15960/_projects/group31/student-distrib/orig.img
+END
+debug.h
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/sp15-ece391/!svn/ver/15960/_projects/group31/student-distrib/debug.h
+END
+Makefile
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/sp15-ece391/!svn/ver/15960/_projects/group31/student-distrib/Makefile
+END
+rtc.h
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/sp15-ece391/!svn/ver/15960/_projects/group31/student-distrib/rtc.h
+END
