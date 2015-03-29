@@ -10,16 +10,26 @@
 #include "keyboard.h"
 #include "idt_init.h"
 #include "rtc.h"
+#include "filesys.h"
+#include "paging.h"
 
 /* Macros. */
 /* Check if the bit BIT in FLAGS is set. */
 #define CHECK_FLAG(flags,bit)   ((flags) & (1 << (bit)))
 
+
+dentry_t test_dentry;
+dentry_t* dentry_ptr = &test_dentry;
+
 /* Check if MAGIC is valid and print the Multiboot information structure
    pointed by ADDR. */
+
 void
 entry (unsigned long magic, unsigned long addr)
 {
+	uint8_t fname[4] = {0x63, 0x61, 0x74, 0x00};
+	
+	//module_t* mod0;
 	multiboot_info_t *mbi;
 
 	/* Clear the screen. */
@@ -165,9 +175,25 @@ entry (unsigned long magic, unsigned long addr)
 	 * without showing you any output */
 	printf("Enabling Interrupts\n");
 	keyboard_init();
-	rtc_init();
-	sti();
 
+	module_t* mod = (module_t*)mbi->mods_addr;
+	filesys_init(mod->mod_start);
+
+	rtc_init();
+	page();
+	sti();
+	printf("calling read name\n");
+	test_dentry.name[0] = 0;
+	test_dentry.type= 0;
+	test_dentry.inode = 0;
+	test_dentry.reserved[0] = 0;
+
+	printf("%d\n", read_dentry_by_name(fname, dentry_ptr));
+	printf("read name returned\n");
+
+	//printf("calling read index\n");
+	//printf("%d\n", read_dentry_by_index(0, test_dentry));
+	//printf("read index returned\n");
 
 	//test_interrupts();
 
