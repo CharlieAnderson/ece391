@@ -187,8 +187,8 @@ entry (unsigned long magic, unsigned long addr)
 	test_dentry.type= 0;
 	test_dentry.inode = 0;
 	test_dentry.reserved[0] = 0;
-
-	printf("%d\n", read_dentry_by_name(fname, dentry_ptr));
+	//printf("%d\n", read_dentry_by_name(fname, dentry_ptr));
+	printf("%d\n", read_dentry_by_index(1, dentry_ptr));
 	printf("read name returned\n");
 
 	//printf("calling read index\n");

@@ -64,25 +64,34 @@ int32_t read_dentry_by_name (const uint8_t* fname, dentry_t* dentry)
 
 int32_t read_dentry_by_index (const uint8_t index, dentry_t* dentry)
 {
-/*
-	uint8_t* dir_entries = (uint8_t*)(*((uint8_t*)MODULE_0) + DIR_ENTRIES);
-	uint32_t num_entries = *((uint8_t*)(*((uint8_t*)MODULE_0)));
-	int32_t flag = -1;
-	
-	uint8_t* curr_entry = dir_entries + index*DIR_ENTRIES;
 
-	
-	if(index > num_entries)
-		return flag;
 
-	
-	strcpy((int8_t*)&(dentry->name), (int8_t*)curr_entry);
-	dentry->type = *(curr_entry + TYPE_OFFSET);
-	dentry->inode = *(curr_entry + INODE_OFFSET);
-	flag = 0;
 
-	return flag; */
-	return -1;
+
+	if(dentry == NULL)
+		return -1;
+
+
+
+	if(index>num_entries)
+		return -1;
+		
+
+
+
+	/* if successfully found, fill dentry */
+	else
+	{
+		strcpy((int8_t*)dentry->name, (int8_t*)dirs[index].name);
+		dentry->type = dirs[index].type ;
+		dentry->inode = dirs[index].inode;
+		printf("name: %s endname \n", (int8_t*)(dentry->name));
+		printf("dentry type: %d endtype \n", dentry->type);
+		printf("dentry inode: %d endinode\n", dentry->inode);
+
+	}
+
+	return 0;
 }
 
 int32_t read_data (uint32_t inode, uint32_t offset, uint8_t* buf, uint32_t length)
