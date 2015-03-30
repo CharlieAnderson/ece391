@@ -12,5 +12,9 @@
 /* Initialize the rtc */
 void rtc_init(void);
 extern void rtc_handler(void);
-
+int rtc_write(int rate);
+int rtc_read(void);
+int rtc_open(void);
+int rtc_close(void);
+void rtc_test(int new_rate);
 #endif /* _RTC_H */

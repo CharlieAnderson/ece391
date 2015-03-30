@@ -24,9 +24,9 @@ rtc_handler(void) {
 	outb(0x0C,0x70);
 	inb(0x71);
 	send_eoi(8);
+	int_flag = 1; //interrupt has occurred
 	//printf("RTC sent EOI \n");
 	sti();
-	int_flag = 1;
 	//test_interrupts();
 }
 
@@ -69,16 +69,15 @@ the screen from the interrupt handler).
 In the case of the RTC, the system call should always accept 
 only a 4-byte integer specifying the interrupt rate in Hz,
  and should set the rate of periodic interrupts accordingly. */
-int write(long rate)
+int rtc_write(int rate)
 {
-	// rate can be 2-6, 0 turns rtc off,  6 is upper limit in terms of frequency (1024hz), 14 is default(2hz) but might be 15
+	
 
-	//limit rate to 1024 hz
 	if(rate < 6)
-		rate = 1024; //caps rate at 1024
+		rate = 6; //caps freq at 1024hz by default (rate of 6), otherwise rate must be greater than 2 (freq at most 8192hz)
 
-	if(rate > 14) //lowest rate will b 2 hz      might be 15 because of the rate-1
-		rate = 14;
+	if(rate > 15) //lowest freq will b 2hz (rate of 15)
+		rate = 15;
 
 	long freq = 32768 >> (rate-1);
 
@@ -99,23 +98,25 @@ int write(long rate)
 	return 0;
 }
 
-int read(void)
+int rtc_read(void)
 {
 
     //wait for interrupt
 	while(int_flag == 0){}
-		
+
+	int_flag = 0;
+
 	return 0;
 }
 
-int open()
+int rtc_open(void)
 {
-	write(14); //default rtc rate is 2hz (rate of 14)
+	rtc_write(15); //default rtc rate is 2hz (rate of 15)
 	return 0;
 }
 
 
-int close()
+int rtc_close(void)
 {
 
 
@@ -123,5 +124,25 @@ int close()
 }
 
 
+void rtc_test(int new_rate)
+{
+int flag;
+// set RTC speed
+flag = rtc_write(6);
 
+if(flag<0)
+	return;
+clear();
+int counter = 0;
+while(1) {
+	// read the rtc
+	rtc_read();
+	
+	counter++;
+	if (counter % 10 == 0) {
+		printf("count: %x \n", counter); 
+	}
+
+}
+}
 

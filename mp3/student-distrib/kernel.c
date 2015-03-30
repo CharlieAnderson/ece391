@@ -188,8 +188,35 @@ entry (unsigned long magic, unsigned long addr)
 	test_dentry.inode = 0;
 	test_dentry.reserved[0] = 0;
 	//printf("%d\n", read_dentry_by_name(fname, dentry_ptr));
+
+
+
+
+
+
+	/*
 	printf("%d\n", read_dentry_by_index(1, dentry_ptr));
 	printf("read name returned\n");
+
+	uint8_t test_string[174];
+	//test_string[0] = 0;
+	int32_t ret = read_data (dentry_ptr->inode, 0, test_string, 174);
+
+	printf("return val %d end\n", ret);
+	int x = 0;
+	clear();
+	printf("\n");
+	for(x=0; x<174; x++)
+	{
+			printf("%c", test_string[x]);
+
+	}
+*/
+
+
+
+rtc_test(7);
+
 
 	//printf("calling read index\n");
 	//printf("%d\n", read_dentry_by_index(0, test_dentry));
