@@ -152,6 +152,10 @@ int32_t read_data (uint32_t inode, uint32_t offset, uint8_t* buf, uint32_t lengt
 int32_t file_open (const uint8_t* filename)
 {
 	dentry_t* dentry;
+	dentry->name[0] = 0;
+	dentry->type= 0;
+	dentry->inode = 0;
+	dentry->reserved[0] = 0;
 	if (-1 == read_dentry_by_name(filename, dentry))
 		return -1;
 	int i;

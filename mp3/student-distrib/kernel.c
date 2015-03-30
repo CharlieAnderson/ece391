@@ -187,12 +187,10 @@ entry (unsigned long magic, unsigned long addr)
 	test_dentry.type= 0;
 	test_dentry.inode = 0;
 	test_dentry.reserved[0] = 0;
+
+//DONT DELETE, stuff below is for testing
+	
 	//printf("%d\n", read_dentry_by_name(fname, dentry_ptr));
-
-
-
-
-
 
 	/*
 	printf("%d\n", read_dentry_by_index(1, dentry_ptr));
@@ -212,18 +210,15 @@ entry (unsigned long magic, unsigned long addr)
 
 	}
 */
-
+/*
 	uint8_t file_name[10] = "frame1.txt";
-	uint32_t ret1 = file_open(file_name);
+	uint32_t ret1 = file_open("frame1.txt");
 	void* buf;
 	uint32_t ret2 = file_read(ret1, buf, BLOCK_SIZE);
 	printf("frame1.txt %s \n", buf);
 	printf("buf length %d \n", strlen((int8_t*)buf));
 	uint32_t ret3 = file_close(ret1);
-
-
-
-
+*/
 
 //rtc_test(6);
 
