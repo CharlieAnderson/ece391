@@ -10,17 +10,26 @@
 #include "keyboard.h"
 #include "idt_init.h"
 #include "rtc.h"
+#include "filesys.h"
 #include "paging.h"
 
 /* Macros. */
 /* Check if the bit BIT in FLAGS is set. */
 #define CHECK_FLAG(flags,bit)   ((flags) & (1 << (bit)))
 
+
+dentry_t test_dentry;
+dentry_t* dentry_ptr = &test_dentry;
+
 /* Check if MAGIC is valid and print the Multiboot information structure
    pointed by ADDR. */
+
 void
 entry (unsigned long magic, unsigned long addr)
 {
+	uint8_t fname[4] = {0x63, 0x61, 0x74, 0x00};
+	
+	//module_t* mod0;
 	multiboot_info_t *mbi;
 
 	/* Clear the screen. */
@@ -166,13 +175,62 @@ entry (unsigned long magic, unsigned long addr)
 	 * without showing you any output */
 	printf("Enabling Interrupts\n");
 	keyboard_init();
-	//rtc_init();
+
+	module_t* mod = (module_t*)mbi->mods_addr;
+	filesys_init(mod->mod_start);
+
+	rtc_open();
 	page();
-	
-	/*int x;
-	x = x/0;*/
-	
 	sti();
+	printf("calling read name\n");
+	test_dentry.name[0] = 0;
+	test_dentry.type= 0;
+	test_dentry.inode = 0;
+	test_dentry.reserved[0] = 0;
+	//printf("%d\n", read_dentry_by_name(fname, dentry_ptr));
+
+
+
+
+
+
+	/*
+	printf("%d\n", read_dentry_by_index(1, dentry_ptr));
+	printf("read name returned\n");
+
+	uint8_t test_string[174];
+	//test_string[0] = 0;
+	int32_t ret = read_data (dentry_ptr->inode, 0, test_string, 174);
+
+	printf("return val %d end\n", ret);
+	int x = 0;
+	clear();
+	printf("\n");
+	for(x=0; x<174; x++)
+	{
+			printf("%c", test_string[x]);
+
+	}
+*/
+
+	uint8_t file_name[10] = "frame1.txt";
+	uint32_t ret1 = file_open(file_name);
+	void* buf;
+	uint32_t ret2 = file_read(ret1, buf, BLOCK_SIZE);
+	printf("frame1.txt %s \n", buf);
+	printf("buf length %d \n", strlen((int8_t*)buf));
+	uint32_t ret3 = file_close(ret1);
+
+
+
+
+
+//rtc_test(6);
+
+
+	//printf("calling read index\n");
+	//printf("%d\n", read_dentry_by_index(0, test_dentry));
+	//printf("read index returned\n");
 
 	//test_interrupts();
 
