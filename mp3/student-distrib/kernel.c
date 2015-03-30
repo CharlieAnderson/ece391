@@ -179,7 +179,7 @@ entry (unsigned long magic, unsigned long addr)
 	module_t* mod = (module_t*)mbi->mods_addr;
 	filesys_init(mod->mod_start);
 
-	rtc_init();
+	rtc_open();
 	page();
 	sti();
 	printf("calling read name\n");
@@ -215,7 +215,7 @@ entry (unsigned long magic, unsigned long addr)
 
 
 
-rtc_test(7);
+rtc_test(6);
 
 
 	//printf("calling read index\n");

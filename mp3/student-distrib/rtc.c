@@ -110,7 +110,7 @@ int rtc_read(void)
 }
 
 int rtc_open(void)
-{
+{	rtc_init();
 	rtc_write(15); //default rtc rate is 2hz (rate of 15)
 	return 0;
 }
@@ -128,19 +128,20 @@ void rtc_test(int new_rate)
 {
 int flag;
 // set RTC speed
-flag = rtc_write(6);
+flag = rtc_write(new_rate);
 
 if(flag<0)
 	return;
+long freq = 32768 >> (new_rate-1);
 clear();
 int counter = 0;
 while(1) {
 	// read the rtc
-	rtc_read();
+	if (rtc_read()==0)
+		counter++;
 	
-	counter++;
 	if (counter % 10 == 0) {
-		printf("count: %x \n", counter); 
+		printf("rate: %d frequency: %dhz count: %d cycles \n", new_rate, freq, counter); 
 	}
 
 }
