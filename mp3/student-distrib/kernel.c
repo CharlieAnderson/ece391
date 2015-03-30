@@ -213,9 +213,19 @@ entry (unsigned long magic, unsigned long addr)
 	}
 */
 
+	uint8_t file_name[10] = "frame1.txt";
+	uint32_t ret1 = file_open(file_name);
+	void* buf;
+	uint32_t ret2 = file_read(ret1, buf, BLOCK_SIZE);
+	printf("frame1.txt %s \n", buf);
+	printf("buf length %d \n", strlen((int8_t*)buf));
+	uint32_t ret3 = file_close(ret1);
 
 
-rtc_test(6);
+
+
+
+//rtc_test(6);
 
 
 	//printf("calling read index\n");
