@@ -34,7 +34,7 @@ static unsigned char key_buffer[BUFFER_SIZE];
 static int buffer_index = 0;
 static unsigned char capsshift = 0;		// 0 = regular, 1 = caps, 2 = shift, 3 = both
 static unsigned char ctrl = 0;		// 0 = not pressed, 1 = pressed
-
+static int file_open = 0;
 /*
 void keyboard_init()
 input:none
@@ -165,4 +165,20 @@ void clear_buffer() {
 		key_buffer[i] = '\0';
 	}
 	buffer_index = 0;
+}
+
+
+int keyboard_open(void)
+{	
+	keyboard_init();
+	file_open = 1;
+
+	return 0;
+}
+
+int keyboard_close(void)
+{
+	file_open = 0;
+
+	return 0;
 }

@@ -27,7 +27,6 @@ dentry_t* dentry_ptr = &test_dentry;
 void
 entry (unsigned long magic, unsigned long addr)
 {
-	uint8_t fname[4] = {0x63, 0x61, 0x74, 0x00};
 	
 	//module_t* mod0;
 	multiboot_info_t *mbi;
@@ -173,26 +172,29 @@ entry (unsigned long magic, unsigned long addr)
 	/* Do not enable the following until after you have set up your
 	 * IDT correctly otherwise QEMU will triple fault and simple close
 	 * without showing you any output */
-	printf("Enabling Interrupts\n");
-	keyboard_init();
+	keyboard_open();
 
 	module_t* mod = (module_t*)mbi->mods_addr;
 	filesys_init(mod->mod_start);
 
 	rtc_open();
 	page();
+
+	printf("Enabling Interrupts\n");
 	sti();
+	
 	printf("calling read name\n");
 	test_dentry.name[0] = 0;
 	test_dentry.type= 0;
 	test_dentry.inode = 0;
 	test_dentry.reserved[0] = 0;
 
-//DONT DELETE, stuff below is for testing
-	
-	//printf("%d\n", read_dentry_by_name(fname, dentry_ptr));
 
-	/*
+// file system testing 
+	/*uint8_t fname[4] = {0x63, 0x61, 0x74, 0x00};
+
+	printf("%d\n", read_dentry_by_name(fname, dentry_ptr));
+	
 	printf("%d\n", read_dentry_by_index(1, dentry_ptr));
 	printf("read name returned\n");
 
@@ -210,6 +212,9 @@ entry (unsigned long magic, unsigned long addr)
 
 	}
 */
+
+
+// more file system testing	
 /*
 	uint8_t file_name[10] = "frame1.txt";
 	uint32_t ret1 = file_open("frame1.txt");
@@ -220,7 +225,14 @@ entry (unsigned long magic, unsigned long addr)
 	uint32_t ret3 = file_close(ret1);
 */
 
-//rtc_test(6);
+//RTC testing
+rtc_test(1000);
+rtc_full_test();
+rtc_close();
+
+//TESTS EXCEPTIONS
+//int x = 1/0; 
+
 
 
 	//printf("calling read index\n");

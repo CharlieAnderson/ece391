@@ -35,4 +35,7 @@ void key_echo(unsigned char key, unsigned char capsshift);
 
 void clear_buffer();
 
+int keyboard_open(void);
+int keyboard_close(void);
+
 #endif /* _KEYBOARD_H */
